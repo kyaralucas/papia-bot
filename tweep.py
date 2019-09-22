@@ -29,7 +29,7 @@ def check_length(text) -> bool:
     :param text:
     :return: bool:
     """
-    if len(text < 150):
+    if 5 < len(text) < 150:
         return True
     else:
         return False
