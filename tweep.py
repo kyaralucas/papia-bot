@@ -32,25 +32,26 @@ def check_length(text) -> bool:
     if 5 < len(text) < 150:
         return True
     else:
+        print("[ERROR] - Incorrect length")
         return False
 
 
 print('Starting...')
-while True:
-    sentence = scrape_article()
+sentence = scrape_article()
 
-    # Authenticate to Twitter
-    auth = tweepy.OAuthHandler(config['CONSUMER_KEY'], config['CONSUMER_SECRET'])
-    auth.set_access_token(config['ACCESS_TOKEN'], config['ACCESS_TOKEN_SECRET'])
+# Authenticate to Twitter
+auth = tweepy.OAuthHandler(config['CONSUMER_KEY'], config['CONSUMER_SECRET'])
+auth.set_access_token(config['ACCESS_TOKEN'], config['ACCESS_TOKEN_SECRET'])
 
-    # Create API object
-    api = tweepy.API(auth)
+# Create API object
+api = tweepy.API(auth)
 
-    # Create a tweet
+# Create a tweet
+tweeted = False
+while not tweeted:
     if check_length(sentence):
         api.update_status(sentence)
         print("[TWEETED] - " + sentence)
-        sleep(1800)
+        tweeted = True
     else:
         continue
-
