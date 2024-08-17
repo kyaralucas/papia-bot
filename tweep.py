@@ -7,7 +7,6 @@ import json
 with open('config.json') as json_file:
     config = json.load(json_file)
 
-
 def scrape_article(url="https://pap.wikipedia.org/wiki/special:random") -> str:
     """
     Scrapes random article from Papiamentu wikipedia.
@@ -37,7 +36,6 @@ def check_length(text) -> bool:
 
 
 print('Starting...')
-sentence = scrape_article()
 
 # Authenticate to Twitter
 auth = tweepy.OAuthHandler(config['CONSUMER_KEY'], config['CONSUMER_SECRET'])
@@ -47,11 +45,12 @@ auth.set_access_token(config['ACCESS_TOKEN'], config['ACCESS_TOKEN_SECRET'])
 api = tweepy.API(auth)
 
 # Create a tweet
-tweeted = False
-while not tweeted:
+twote = False
+while not twote:
+    sentence = scrape_article()
     if check_length(sentence):
         api.update_status(sentence)
-        print("[TWEETED] - " + sentence)
-        tweeted = True
+        print("[TWOTE] - " + sentence)
+        twote = True
     else:
         continue
